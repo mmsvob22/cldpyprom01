@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-from .ai_agent import run_conversation
+from cldpyprom01.ai_agent import run_conversation
 
 st.set_page_config(page_title="Resource Manager", page_icon="🗄️", layout="wide")
 st.title("Resource Manager — AI Chat")
