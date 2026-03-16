@@ -1,7 +1,7 @@
 # cldpyprom01
 
 ## Project Overview
-<!-- Describe what this project does -->
+<"Prototype of using AI to perform Read, Write, Update and Delete operations via REST API over SQL lite DB "->
 
 ## Tech Stack
 - Language: Python 3.10+
@@ -10,8 +10,8 @@
 
 ## Commands
 ```bash
-# Run main script
-poetry run python src/cldpyprom01/main.py
+# Run API server
+poetry run uvicorn cldpyprom01.main:app --host 0.0.0.0 --port 8000 --reload
 
 # Install dependencies
 poetry install
