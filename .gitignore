@@ -15,8 +15,8 @@ build/
 venv/
 env/
 
-# Poetry
-poetry.lock
+# Poetry (keep lock file for reproducibility)
+# poetry.lock
 
 # IDE
 .vscode/
