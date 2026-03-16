@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "cldpyprom01"
+version = "0.1.0"
+description = ""
+authors = ["mmsvob22 <55430035+mmsvob22@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "cldpyprom01", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
