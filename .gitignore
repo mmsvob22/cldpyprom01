@@ -25,6 +25,7 @@ env/
 # Secrets & local config
 .env
 secrets.toml
+.streamlit/secrets.toml
 *.db
 
 # OS

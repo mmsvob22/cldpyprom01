@@ -10,8 +10,11 @@
 
 ## Commands
 ```bash
-# Run API server
+# Run REST API server (terminal 1)
 poetry run uvicorn cldpyprom01.main:app --host 0.0.0.0 --port 8000 --reload
+
+# Run AI Chat UI (terminal 2)
+poetry run streamlit run src/cldpyprom01/chat.py
 
 # Install dependencies
 poetry install
@@ -25,10 +28,23 @@ poetry add <package>
 cldpyprom01/
 ├── src/cldpyprom01/
 │   ├── __init__.py
-│   └── main.py       # Entry point
+│   ├── main.py        # FastAPI app entry point
+│   ├── database.py    # SQLite connection and table init
+│   ├── models.py      # Pydantic schemas
+│   ├── router.py      # CRUD endpoints
+│   ├── ai_agent.py    # Claude API tool-use integration
+│   └── chat.py        # Streamlit chat UI
+├── .streamlit/
+│   └── secrets.toml   # API keys (gitignored — copy from secrets.toml.example)
 ├── tests/
 ├── pyproject.toml
 └── CLAUDE.md
+```
+
+## Secrets Setup
+Copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml` and fill in:
+```toml
+ANTHROPIC_API_KEY = "your-api-key-here"
 ```
 
 ## Code Style
