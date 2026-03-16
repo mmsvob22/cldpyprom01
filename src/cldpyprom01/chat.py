@@ -61,9 +61,13 @@ if prompt := st.chat_input("Type your instruction… e.g. 'Upload resources from
     # Run AI agent
     with st.chat_message("assistant"):
         with st.spinner("Processing…"):
-            response_text, updated_messages = run_conversation(st.session_state.claude_messages)
-        st.markdown(response_text)
-
-    # Persist updated history
-    st.session_state.display_messages.append({"role": "assistant", "content": response_text})
-    st.session_state.claude_messages = updated_messages
+            try:
+                response_text, updated_messages = run_conversation(st.session_state.claude_messages)
+                st.markdown(response_text)
+                st.session_state.display_messages.append({"role": "assistant", "content": response_text})
+                st.session_state.claude_messages = updated_messages
+            except Exception as e:
+                # Roll back the user message so history stays clean
+                st.session_state.claude_messages.pop()
+                st.session_state.display_messages.pop()
+                st.error(f"Error: {e}")

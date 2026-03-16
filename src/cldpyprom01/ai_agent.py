@@ -167,10 +167,12 @@ def run_conversation(claude_messages: list) -> tuple[str, list]:
             messages=messages,
         )
 
-        messages.append({"role": "assistant", "content": response.content})
+        # Serialize SDK objects to plain dicts so they survive Streamlit session state
+        serialized_content = [block.model_dump() for block in response.content]
+        messages.append({"role": "assistant", "content": serialized_content})
 
         if response.stop_reason == "end_turn":
-            text = next((b.text for b in response.content if hasattr(b, "text")), "")
+            text = next((b.get("text", "") for b in serialized_content if b.get("type") == "text"), "")
             return text, messages
 
         if response.stop_reason == "tool_use":
