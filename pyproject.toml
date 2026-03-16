@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "cldpyprom01"
 version = "0.1.0"
-description = ""
+description = "Prototype of using AI to perform CRUD operations via REST API over SQLite DB"
 authors = ["mmsvob22 <55430035+mmsvob22@users.noreply.github.com>"]
 readme = "README.md"
 packages = [{include = "cldpyprom01", from = "src"}]

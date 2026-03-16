@@ -53,6 +53,11 @@ ANTHROPIC_API_KEY = "your-api-key-here"
 - f-strings preferred over .format()
 - Keep secrets out of source — use .env or secrets.toml (gitignored)
 
+## Known Behaviours
+- If the Streamlit chat returns an API error, click "Clear conversation" in the sidebar before retrying
+- The REST API server (port 8000) must be running before starting the chat UI
+- Streamlit must be run via `poetry run` so the package is on the Python path
+
 ## What NOT to Do
 - Don't commit .env or secrets.toml
 - Don't hardcode credentials
