@@ -167,8 +167,18 @@ def run_conversation(claude_messages: list) -> tuple[str, list]:
             messages=messages,
         )
 
-        # Serialize SDK objects to plain dicts so they survive Streamlit session state
-        serialized_content = [block.model_dump() for block in response.content]
+        # Serialize SDK objects to plain dicts using only fields the API accepts
+        serialized_content = []
+        for block in response.content:
+            if block.type == "text":
+                serialized_content.append({"type": "text", "text": block.text})
+            elif block.type == "tool_use":
+                serialized_content.append({
+                    "type": "tool_use",
+                    "id": block.id,
+                    "name": block.name,
+                    "input": dict(block.input),
+                })
         messages.append({"role": "assistant", "content": serialized_content})
 
         if response.stop_reason == "end_turn":
@@ -177,12 +187,12 @@ def run_conversation(claude_messages: list) -> tuple[str, list]:
 
         if response.stop_reason == "tool_use":
             tool_results = []
-            for block in response.content:
-                if block.type == "tool_use":
-                    result = _execute_tool(block.name, dict(block.input))
+            for block in serialized_content:
+                if block["type"] == "tool_use":
+                    result = _execute_tool(block["name"], dict(block["input"]))
                     tool_results.append({
                         "type": "tool_result",
-                        "tool_use_id": block.id,
+                        "tool_use_id": block["id"],
                         "content": result,
                     })
             messages.append({"role": "user", "content": tool_results})
